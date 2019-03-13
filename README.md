@@ -3,9 +3,13 @@
 
 ## Files
 
-In the file main.rs you can find an example of the working code.
-* Bullet list
-  * main.rs
+High level overview of files:
+
+* main.rs : you can find an example of the working code.
+* lib.rs : contains the unit-tests.
+* surface.rs : contains the declaration of points, planes and rectangles structs.
+* functions.rs : contains translation and rotation functions, checking functions
+
 
 
 
