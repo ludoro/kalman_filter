@@ -38,7 +38,7 @@ pub fn global_to_local(point3D: surface::Point3D) -> surface::Point2D {
     return point2D
 }
 
-pub fn local_to_global(point2D: surface::Point3D) -> surface::Point3D {
+pub fn local_to_global(point2D: surface::Point2D) -> surface::Point3D {
     let point3D = surface::Point3D::new(point2D.x,point2D.y, 0.0);
     return point3D;
 
@@ -46,7 +46,7 @@ pub fn local_to_global(point2D: surface::Point3D) -> surface::Point3D {
 
 // First of all, I traslate the plane to the origin. The translatio has to act on the 3D point as well
 // to remain consistent. This is effectively the same as translating the axis.
-pub fn traslation_to_origin(rectangle: surface::Rectangle, point3D: surface::Point3D) -> (surface::Rectangle,surface::Point3D,f64) {
+pub fn translation_to_origin(rectangle: surface::Rectangle, point3D: surface::Point3D) -> (surface::Rectangle,surface::Point3D,f64) {
     if rectangle.plane.d.abs() < EPS {
         // the plane already passes through the origin.
         return (rectangle,point3D,0.0);
@@ -54,27 +54,28 @@ pub fn traslation_to_origin(rectangle: surface::Rectangle, point3D: surface::Poi
         // If I have a plane ax + by + cz + d = 0, it intersects the z-axis at (0,0,-d/c), so
         // the translation t:(𝑥,𝑦,𝑧)→(𝑥,𝑦,𝑧−𝑑/𝑐) gives me the plane ax + by +cz = 0
         // that passes through the origin.
-        let traslation_value = rectangle.plane.d/rectangle.plane.c;
+        let translation_value = rectangle.plane.d/rectangle.plane.c;
         let new_rectangle = surface::Rectangle::new(rectangle.plane.a,
                                rectangle.plane.b,rectangle.plane.c,0.0,rectangle.x_bound,rectangle.y_bound);
-        let new_point = surface::Point3D::new(point3D.x,point3D.y,point3D.z - traslation_value);
+        let new_point = surface::Point3D::new(point3D.x,point3D.y,point3D.z - translation_value);
 
         // I need to return the translation value, it will be used for the inverse transformation.
-        return(new_rectangle,new_point,traslation_value);
+        return(new_rectangle,new_point,translation_value);
 
     }
 
 }
 
-pub fn translation_from_origin(rectangle: surface::Rectangle, point3D: surface::Point3D, traslation_value: f64) -> (surface::Rectangle,surface::Point3D) {
+pub fn translation_from_origin(rectangle: surface::Rectangle, point3D: surface::Point3D, translation_value: f64) -> (surface::Rectangle,surface::Point3D) {
     //the invere is just (x,y,z) -> (x,y,z+d/c)
     let new_rectangle = surface::Rectangle::new(rectangle.plane.a,
-                           rectangle.plane.b,rectangle.plane.c,traslation_value*rectangle.plane.c
+                           rectangle.plane.b,rectangle.plane.c,translation_value*rectangle.plane.c
                            ,rectangle.x_bound,rectangle.y_bound);
-    let new_point = surface::Point3D::new(point3D.x,point3D.y,point3D.z + traslation_value);
+    let new_point = surface::Point3D::new(point3D.x,point3D.y,point3D.z + translation_value);
 
     return (new_rectangle,new_point);
 }
+
 
 // I will now calcute the rotation matrix that makes the plane parallel to xy plane. Note that this method
 // has to be applied when the term d is equal to 0, that means that we have already traslated it.
@@ -85,6 +86,8 @@ pub fn translation_from_origin(rectangle: surface::Rectangle, point3D: surface::
 pub fn rotation_to_xy_plane(rectangle: surface::Rectangle) -> Matrix3<f64> {
 
     //After some math calculations, we find that the rotation matrix is the folling:
+    // I took heavy ispiration from this post on stack:
+    // https://math.stackexchange.com/questions/1167717/transform-a-plane-to-the-xy-plane
     let sum_squared = (pow(rectangle.plane.a,2) +
                        pow(rectangle.plane.b,2) + pow(rectangle.plane.c,2)).sqrt();
     let cos = rectangle.plane.c / sum_squared;
