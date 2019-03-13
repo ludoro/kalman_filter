@@ -1,5 +1,21 @@
 ## Introduction
 
+I implemented all required functionalities. Matrix operations can get nasty very
+quickly, that is why I decided to use the library "nalgebra" for matrix related
+stuff.
+
+The inverse of the rotation matrix does not actually require any calculations
+as it is just the transpose thanks to theory.
+The library has the .transpose() function too.
+
+The choiche of the library is something that should take more time because
+I found  a lot of those. However the majority are poorly documented, while nalagebra has
+a really well structured documentation.
+
+I declared a global variable (static in rust) called EPS = 10^{-6} which is the
+the tollerance used in the calculations.
+When dealing with numerical equalities, it is important to use such a variable because
+it will be hard to have perfect equality using f64 variables.
 
 ## Files
 
@@ -8,20 +24,12 @@ High level overview of files:
 * main.rs : you can find an example of the working code.
 * lib.rs : contains the unit-tests.
 * surface.rs : contains the declaration of points, planes and rectangles structs.
-* functions.rs : contains translation and rotation functions, checking functions
+* functions.rs : contains translation and rotation functions, checking functions.
 
 
 
 
-## How to use + plus requirements
-
-Compiler: rustc 1.33.0
-Cargo: 1.33.0
-
-Dependencies:
-nalgebra = "0.17.2"
-approx = "0.3.1"
-num-traits = "0.2"
+## How to use + requirements
 
 The code is run using cargo.
 The "project" is created running cargo new #project_name --bin
@@ -29,7 +37,26 @@ The "project" is created running cargo new #project_name --bin
 In terminal:
 
 For testing: cargo test
+
+Compiler: rustc 1.33.0
+
+Cargo: 1.33.0
+
+Dependencies:
+
+nalgebra = "0.17.2"
+
+approx = "0.3.1"
+
+num-traits = "0.2"
+
+The dependencies must be listed in the cargo.toml file.
+With the first build everything will be installed and compiled, pretty neat!
+
+
+
 For building: cargo build
+
 For running: cargo run
 
 If maximum performance is required, it is best to use the flag --release when building.
