@@ -1,18 +1,20 @@
 # Introduction
 
-I implemented all required functionalities. Matrix operations can get nasty very
-quickly, that is why I decided to use the library "nalgebra" for matrix related
-stuff.
+## Library
+Matrix operations can get nasty very quickly, that is why I decided to use the
+library "nalgebra" for matrix related stuff.
 
+For the entries of the rotation matrix, I took heavy inspiration from here:
+https://math.stackexchange.com/questions/1167717/transform-a-plane-to-the-xy-plane
+
+(I could also have used the function .rotate() by nalgebra)
 
 The inverse of the rotation matrix does not actually require any calculations
-as it is just the transpose thanks to theory.
+as it is just the transpose thanks to linear algebra theory.
 The library has the .transpose() function too.
 
-## Library
-
 The choice of the library is something that should take more time because
-there are a lot of them. However the majority are poorly documented, while nalagebra has
+there are a lot of them. However the majority are poorly documented, while nalgebra has
 a really well structured documentation.
 
 ## Tollerance
@@ -21,13 +23,14 @@ the tollerance used in the calculations.
 When dealing with numerical equalities, it is important to use such a variable because
 it will be hard to have perfect equality using f64 variables.
 
+
 # Files
 
 High level overview of files:
 
 * main.rs : you can find an example of the working code.
 * lib.rs : contains the unit-tests.
-* surface.rs : contains the declaration of points, planes and rectangles structs.
+* surface.rs : contains the declaration for points, planes and rectangles structs.
 * functions.rs : contains translation and rotation functions, checking functions.
 
 
