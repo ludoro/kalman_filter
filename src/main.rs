@@ -18,6 +18,7 @@ fn main() {
 
     //The inverse is the tranpose
     let inverse = rotation_matrix.transpose();
-    
+
+    println!("Everything is working nicely!");
 
 }
