@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 I implemented all required functionalities. Matrix operations can get nasty very
 quickly, that is why I decided to use the library "nalgebra" for matrix related
@@ -9,19 +9,19 @@ The inverse of the rotation matrix does not actually require any calculations
 as it is just the transpose thanks to theory.
 The library has the .transpose() function too.
 
-# Library
+## Library
 
 The choice of the library is something that should take more time because
 there are a lot of them. However the majority are poorly documented, while nalagebra has
 a really well structured documentation.
 
-# Tollerance
+## Tollerance
 I declared a global variable (static in rust) called EPS = 10^{-6} which is the
 the tollerance used in the calculations.
 When dealing with numerical equalities, it is important to use such a variable because
 it will be hard to have perfect equality using f64 variables.
 
-## Files
+# Files
 
 High level overview of files:
 
@@ -33,7 +33,7 @@ High level overview of files:
 
 
 
-## How to use + requirements
+# How to use + requirements
 
 The code is run using cargo.
 The "project" is created running cargo new #project_name --bin
@@ -67,6 +67,6 @@ If maximum performance is required, it is best to use the flag --release when bu
 
 Compilation will take more time but the code will run faster.
 
-## Things to improve
+# Things to improve
 I should have used more generics types, but I wanted to keep it simple for a
 first implementation.
